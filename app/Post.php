@@ -12,4 +12,12 @@ class Post extends Model
     public $translatedAttributes = ['title', 'slug', 'content'];
 
     protected $fillable = ['title', 'slug', 'content'];
+
+    public function author() {
+        $this->belongsTo('App\User');
+    }
+
+    public function category() {
+        $this->belongsTo('App\Category');
+    }
 }
