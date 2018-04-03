@@ -16,6 +16,21 @@
 
 	<link href="{{asset('admin/css/libs.css')}}" rel="stylesheet">
 
+	<!-- MetisMenu CSS -->
+	<link href="{{asset('admin/vendor/metisMenu/metisMenu.min.css')}}" rel="stylesheet">
+
+	<!-- DataTables CSS -->
+	<link href="{{asset('admin/vendor/datatables-plugins/dataTables.bootstrap.css')}}" rel="stylesheet">
+
+	<!-- DataTables Responsive CSS -->
+	<link href="{{asset('admin/vendor/datatables-responsive/dataTables.responsive.css')}}" rel="stylesheet">
+
+	<!-- Custom CSS -->
+	<link href="{{asset('admin/dist/css/sb-admin-2.css')}}" rel="stylesheet">
+
+	<!-- Custom Fonts -->
+	<link href="{{asset('admin/vendor/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,7 +66,22 @@
 
 		<ul class="nav navbar-top-links navbar-right">
 
-
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					{{ app()->getLocale() }} <i class="fa fa-caret-down"></i>
+				</a>
+				<ul class="dropdown-menu">
+					@foreach (config('translatable.locales') as $lang => $language)
+						@if ($lang != app()->getLocale())
+							<li>
+								<a href="{{ route('lang.switch', $lang) }}">
+									{{ $language }}
+								</a>
+							</li>
+						@endif
+					@endforeach
+				</ul>
+			</li>
 			<!-- /.dropdown -->
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -137,22 +167,9 @@
 					</li>
 
 					<li>
-						<a href="#"><i class="fa fa-wrench fa-fw"></i> Posts<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li>
-								<a href="">All Posts</a>
-							</li>
+						<a href="{{route('posts.index')}}"><i class="fa fa-folder-open fa-fw"></i> Posts</a>
 
-							<li>
-								<a href="">Create Post</a>
-							</li>
 
-							<li>
-								<a href="#">Comments</a>
-							</li>
-
-						</ul>
-						<!-- /.nav-second-level -->
 					</li>
 
 
@@ -290,14 +307,29 @@
 <!-- jQuery -->
 <script src="{{asset('admin/js/libs.js')}}"></script>
 
+<!-- Metis Menu Plugin JavaScript -->
+<script src="{{asset('admin/vendor/metisMenu/metisMenu.min.js')}}"></script>
+
+<!-- DataTables JavaScript -->
+<script src="{{asset('admin/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('admin/vendor/datatables-plugins/dataTables.bootstrap.min.js')}}"></script>
+<script src="{{asset('admin/vendor/datatables-responsive/dataTables.responsive.js')}}"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="{{asset('admin/dist/js/sb-admin-2.js')}}"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
+
 
 
 @yield('scripts')
-
-
-
-
-
 
 
 

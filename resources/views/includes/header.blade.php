@@ -47,13 +47,28 @@
                 <a href="#"><i class="fa fa-instagram"></i></a>
             </div>
             <ul class="register">
-                <li class="dropdown language" style="display: block;">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i> Languages</a>
+                {{--<li class="dropdown language" style="display: block;">--}}
+                    {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i> Languages</a>--}}
+                    {{--<ul class="dropdown-menu">--}}
+                        {{--<li><a href="{{route('lang.switch',['lang'=>'en'])}}">English <i class="fa"></i></a></li>--}}
+                        {{--<li><a href="{{route('lang.switch',['lang'=>'sr'])}}">Serbian <i class="fa"></i></a></li>--}}
+
+                    {{--</ul>--}}
+                {{--</li>--}}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        {{ app()->getLocale() }} <i class="fa fa-caret-down"></i>
+                    </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">English <i class="fa fa-check"></i></a></li>
-                        <li><a href="#">Spanish</a></li>
-                        <li><a href="#">Russian</a></li>
-                        <li><a href="#">German</a></li>
+                        @foreach (config('translatable.locales') as $lang => $language)
+                            @if ($lang != app()->getLocale())
+                                <li>
+                                    <a href="{{ route('lang.switch', $lang) }}">
+                                        {{ $language }}
+                                    </a>
+                                </li>
+                            @endif
+                        @endforeach
                     </ul>
                 </li>
                 <li><a href="page_faq.html">Help</a></li>
@@ -63,7 +78,7 @@
                     <li class="dropdown language" style="display: block;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle-o"></i> {{Auth::user()->name}}   <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">English <i class="fa fa-check"></i></a></li>
+
                             <li><a href="#">Spanish</a></li>
                             <li><a href="#">Russian</a></li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}"

@@ -25,11 +25,32 @@ Route::get('email-verification/check/{token}', 'Auth\RegisterController@getVerif
 
 Route::group(['middleware'=>'role:admin'],function(){
 
+//    admin view
     Route::get('/admin',function(){
         return view('admin.index');
     })->name('admin');
 
+//    admin users routes
     Route::resource('/admin/users','UsersController');
 
+//    admin posts routes
 
+    Route::get('/admin/posts','PostsController@index')->name('posts.index');
+
+    Route::get('/admin/posts/{post}/edit','PostsController@edit')->name('posts.edit');
+
+    Route::patch('/admin/posts/{post}','PostsController@update')->name('posts.update');
 });
+
+Route::group(['middleware'=>'role:admin,subscriber'],function(){
+
+//    admin post create route
+
+    Route::get('/admin/posts/create','PostsController@create')->name('posts.create');
+
+//    admin post store route
+
+    Route::post('/admin/posts','PostsController@store')->name('posts.store');
+});
+
+Route::get('lang/{language}', ['as' => 'lang.switch', 'uses' => 'LanguageController@switchLang']);
