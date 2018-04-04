@@ -45,17 +45,25 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        Auth::user()->posts()->create($request->all());
+        $post = Auth::user()->posts()->create($request->all());
 //        Post::create($request->all());
+
+        if($request->file('photos')) {
+
+            foreach ($request->file('photos') as $photo) {
+
+                $name = time() . $photo->getClientOriginalName();
+
+                $photo->move('media',$name);
+
+                $post->photos()->create(['file'=>$name]);
+            }
+        }
 
         Session::flash('message', 'Post added!');
         Session::flash('status', 'success');
 
         return redirect()->route('posts.index');
-
-//        foreach ($request->file('photos') as $photo) {
-//            echo $photo->getClientOriginalName();
-//    }
 
     }
 
@@ -103,6 +111,9 @@ class PostsController extends Controller
 
         if($post->hasTranslation()) {
             $post->update($request->all());
+            if($request->file('photos')) {
+                $post->photos()->delete();
+            }
             return redirect()->route('posts.index');
         }
 //        otherwise save () post translation
@@ -129,12 +140,18 @@ class PostsController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        foreach ($post->photos as $photo) {
+
+        unlink(public_path() . $photo->file);
+
+    }
+
         $post->delete();
 
         Session::flash('message', 'Post deleted!');
         Session::flash('status', 'success');
 
-        return redirect('posts');
+        return redirect()->route('posts.index');
     }
 
 }

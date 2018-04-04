@@ -23,7 +23,7 @@ Post
                         <a href="{{ url(App::getLocale() . '/admin/posts/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Update</a>
                         {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['posts', $item->id],
+                            'url' => [App::getLocale() . '/admin/posts', $item->id],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}

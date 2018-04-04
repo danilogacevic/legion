@@ -18,8 +18,9 @@ class CreatePhotosTable extends Migration
                 $table->integer('post_id')->unsigned()->index();
                 $table->string('file');
 
+                $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
                 $table->timestamps();
-                $table->softDeletes();
+
             });
             
     }

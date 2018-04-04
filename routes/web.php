@@ -40,6 +40,8 @@ Route::group(['middleware'=>'role:admin'],function(){
     Route::get('/admin/posts/{post}/edit','PostsController@edit')->name('posts.edit');
 
     Route::patch('/admin/posts/{post}','PostsController@update')->name('posts.update');
+
+    Route::delete('/admin/posts/{post}','PostsController@destroy')->name('posts.delete');
 });
 
 Route::group(['middleware'=>'role:admin,subscriber'],function(){

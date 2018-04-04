@@ -11,7 +11,7 @@ Edit Post
     {!! Form::model($post, [
         'method' => 'PATCH',
         'url' => [App::getLocale(). '/admin/posts', $post->id],
-        'class' => 'form-horizontal'
+        'class' => 'form-horizontal','files'=>'true'
     ]) !!}
 
     <div class="form-group {{ $errors->has('title') ? 'has-error' : ''}}">
@@ -27,6 +27,21 @@ Edit Post
         <div class="col-sm-6">
             {!! Form::select('category_id',  $categories, null, ['class'=>'form-control'])!!}
             {!! $errors->first('category', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+
+    <div class="form-group {{ $errors->has('photos[]') ? 'has-error' : ''}}">
+        {!! Form::label('photos[]', 'Photos: ', ['class' => 'col-sm-3 control-label']) !!}
+        <div class="col-sm-6">
+            {!! Form::file('photos[]', null, ['class'=>'form-control'])!!}
+            {!! $errors->first('photos[]', '<p class="help-block">:message</p>') !!}
+        </div>
+    </div>
+    <div class="form-group {{ $errors->has('photos[]') ? 'has-error' : ''}}">
+        {!! Form::label('photos[]', 'Photos: ', ['class' => 'col-sm-3 control-label']) !!}
+        <div class="col-sm-6">
+            {!! Form::file('photos[]', null, ['class'=>'form-control'])!!}
+            {!! $errors->first('photos[]', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
 
