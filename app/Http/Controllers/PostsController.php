@@ -63,6 +63,10 @@ class PostsController extends Controller
         Session::flash('message', 'Post added!');
         Session::flash('status', 'success');
 
+        if(in_array(Auth::user()->role->title,['subscriber','golden_member'])) {
+            return redirect()->route('home');
+        }
+
         return redirect()->route('posts.index');
 
     }
@@ -112,7 +116,27 @@ class PostsController extends Controller
         if($post->hasTranslation()) {
             $post->update($request->all());
             if($request->file('photos')) {
+
+                // Unlink old images
+                foreach ($post->photos as $photo) {
+
+                    unlink(public_path() . $photo->file);
+
+                }
+
+                // Delete old images
                 $post->photos()->delete();
+
+                // Insert new images
+                foreach ($request->file('photos') as $photo) {
+
+                    $name = time() . $photo->getClientOriginalName();
+
+                    $photo->move('media',$name);
+
+                    $post->photos()->create(['file'=>$name]);
+                }
+
             }
             return redirect()->route('posts.index');
         }

@@ -174,35 +174,19 @@
 
 
 					<li>
-						<a href="#"><i class="fa fa-wrench fa-fw"></i>Categories<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li>
-								<a href="">All Categories</a>
-							</li>
+						<a href="{{route('categories.index')}}"><i class="fa fa-wrench fa-fw"></i>Categories</a>
 
-
-
-						</ul>
-						<!-- /.nav-second-level -->
 					</li>
 
 
 					<li>
-						<a href="#"><i class="fa fa-wrench fa-fw"></i>Media<span class="fa arrow"></span></a>
-						<ul class="nav nav-second-level">
-							<li>
-								<a href="">All Media</a>
-							</li>
+						<a href="{{route('photos.index')}}"><i class="fa fa-file-picture-o fa-fw"></i> Gallery</a>
 
-							<li>
-								<a href="">Upload Media</a>
-							</li>
-
-						</ul>
-						<!-- /.nav-second-level -->
 					</li>
+					<li>
+						<a href="{{route('videos.index')}}"><i class="fa fa-file-video-o fa-fw"></i> Videos</a>
 
-
+					</li>
 
 
 

@@ -74,12 +74,12 @@
                 <li><a href="page_faq.html">Help</a></li>
                 @if(Auth::guest())
                 <li><a href="{{route('login')}}">Login</a></li>
-                    @elseif(Auth::check() && in_array(Auth::user()->role->title,['subscriber','golden_member']))
+                @elseif(Auth::check() && in_array(Auth::user()->role->title,['subscriber','golden_member']))
                     <li class="dropdown language" style="display: block;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle-o"></i> {{Auth::user()->name}}   <i class="fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
 
-                            <li><a href="#">Spanish</a></li>
+                            <li><a href="{{route('create.post')}}">Add new post</a></li>
                             <li><a href="#">Russian</a></li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
@@ -94,7 +94,7 @@
                     </li>
                     @else
                     <li><a href="{{route('admin')}}">Admin</a></li>
-                    @endif
+                @endif
             </ul>
         </div>
     </div>

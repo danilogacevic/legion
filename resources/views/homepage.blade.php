@@ -1,6 +1,17 @@
 @extends('layouts.mainLayout')
 
 @section('styles')
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="keywords" content="corporate html template - agency theme - business html template - creative theme - portfolio html template - gallery theme - restaurant theme - ecommerce template - app template - landing page - real estate theme">
+    <meta name="description" content="Bootstrap HTML5 template for agency, corporate, business, app and creative portfolio, it is suitable for any kind of websites, like ecommerce, restaurant, photography, gallery and retail website.">
+    <meta name="author" content="encodeslife">
+    <link rel="icon" href="img/favicon.png">
+
+    <title>Ecada - Responsive Multipurpose Template</title>
     <!-- BOOTSTRAP -->
     <link href="{{asset('js/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
@@ -569,8 +580,8 @@
                 <div class="col-xs-12">
                     <!-- START - Gallery Filter  -->
                     <ul class="filter-items">
-                        <li><a href="#" data-filter="" class="active">All</a></li>
-                        <li><a href="#" data-filter="web">Web</a></li>
+                        {{--<li><a href="#" data-filter="" class="active">All</a></li>--}}
+                        <li><a href="#" data-filter="web" class="active">Web</a></li>
                         <li><a href="#" data-filter="graphic">Graphic</a></li>
                         <li><a href="#" data-filter="logo">Logo</a></li>
                         <li><a href="#" data-filter="app">App</a></li>
@@ -582,24 +593,29 @@
             <!-- START - Images Gallery -->
             <div id="gallery" class="masonry gallery">
                 <div class="row">
+
+                    @foreach($photos as $photo)
                     <!-- START - Gallery 01 -->
                     <div data-filter="web" class="grid-item col-xs-12 col-sm-4">
                         <div class="img-wrapper">
                             <div class="img-caption ecadaZoomInDown">
-                                <a href="img/gallery/img_380x380.png" data-pretty="prettyPhoto" class="zoomer"><i class="fa fa-search"></i></a>
-                                <h5><a href="portfolio_single_item.html">Project Title</a></h5>
-                                <a href="#" class="img-categorie">Web design</a>
+                                <a href="{{$photo->file}}" data-pretty="prettyPhoto" class="zoomer"><i class="fa fa-search"></i></a>
+                                {{--<h5><a href="portfolio_single_item.html">Project Title</a></h5>--}}
+                                {{--<a href="#" class="img-categorie">Web design</a>--}}
                             </div>
-                            <img src="img/gallery/img_380x380.png" class="img-responsive" alt="" />
+                            <img src="{{$photo->file}}" class="img-responsive" alt="" />
                         </div>
                     </div>
                     <!-- END - Gallery 01 -->
+
+                    @endforeach
 
                     <!-- START - Gallery 02 -->
                     <div data-filter="graphic" class="grid-item col-xs-12 col-sm-4">
                         <div class="img-wrapper">
                             <div class="img-caption ecadaZoomInDown">
-                                <a href="img/gallery/img_380x380.png" data-pretty="prettyPhoto" class="zoomer"><i class="fa fa-search"></i></a>
+                                {{-- Promijenio da bih prilagodio za video --}}
+                                <a href="https://www.youtube.com/watch?v=kKlzQDt69B0" target="_blank" class="zoomer"><i class="fa fa-search"></i></a>
                                 <h5><a href="portfolio_single_item.html">Project Title</a></h5>
                                 <a href="#" class="img-categorie">Web design</a>
                             </div>
@@ -718,57 +734,35 @@
                 </div>
             </div>
             <div class="row">
+
+                @foreach($posts as $post)
                 <div class="col-md-4">
                     <article class="post-wrapper">
-                        <a href="#"><img src="img/blog/img_750x500.png" class="img-responsive" alt="" /></a>
+                        <a href="{{route('post',$post->id)}}"><img src="{{$post->photos->count() ? $post->photos->first()->file : 'img/blog/img_750x500.png'}}" class="img-responsive" alt=""/></a>
                         <div class="post-content">
-                            <span class="post-date">17 August 2017</span>
-                            <h5><a href="#">Pro labitur invenire in ullum.</a></h5>
+                            <span class="post-date">{{$post->created_at->diffForHumans()}}</span>
+                            <h5><a href="{{route('post',$post->id)}}">{{$post->title}}</a></h5>
                             <div class="footer-post">
                                 <ul>
                                     <li><a href="#"><i class="fa fa-share-alt"></i> 174</a></li>
                                     <li><a href="#"><i class="fa fa-comments"></i> 24</a></li>
                                     <li><a href="#"><i class="fa fa-heart"></i> 8</a></li>
                                 </ul>
-                                <a href="#" class="btn-e btn-e-primary btn-sm">Read more +</a>
+                                <a href="{{route('post',$post->id)}}" class="btn-e btn-e-primary btn-sm">Read more +</a>
                             </div>
                         </div>
                     </article>
                 </div>
-                <div class="col-md-4">
-                    <article class="post-wrapper">
-                        <a href="#"><img src="img/blog/img_750x500.png" class="img-responsive" alt="" /></a>
-                        <div class="post-content">
-                            <span class="post-date">17 August 2017</span>
-                            <h5><a href="#">Electram definitiones id duo.</a></h5>
-                            <div class="footer-post">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-share-alt"></i> 174</a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 24</a></li>
-                                    <li><a href="#"><i class="fa fa-heart"></i> 8</a></li>
-                                </ul>
-                                <a href="#" class="btn-e btn-e-primary btn-sm">Read more +</a>
-                            </div>
-                        </div>
-                    </article>
+                @endforeach
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {{$posts->render()}}
+                    </div>
+
                 </div>
-                <div class="col-md-4">
-                    <article class="post-wrapper">
-                        <a href="#"><img src="img/blog/img_750x500.png" class="img-responsive" alt="" /></a>
-                        <div class="post-content">
-                            <span class="post-date">17 August 2017</span>
-                            <h5><a href="#">Eu vidit voluptaria quo vel.</a></h5>
-                            <div class="footer-post">
-                                <ul>
-                                    <li><a href="#"><i class="fa fa-share-alt"></i> 174</a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 24</a></li>
-                                    <li><a href="#"><i class="fa fa-heart"></i> 8</a></li>
-                                </ul>
-                                <a href="#" class="btn-e btn-e-primary btn-sm">Read more +</a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+
             </div>
         </div>
     </div>
@@ -880,7 +874,40 @@
                             </ul>
                         </div>
                         <div class="pricing-action">
-                            <a href="#" class="btn-e btn-e-primary">Buy it now</a>
+                            {{--<a href="#" class="btn-e btn-e-primary">Buy it now</a>--}}
+                            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                <input type="hidden" name="cmd" value="_cart">
+                                <input type="hidden" name="business" value="dakagacevic@facilitator.com">
+                                <input type="hidden" name="currency_code" value="US">
+
+
+
+
+
+                                <input type="hidden" name="item_name_1" value="Premium package">
+                                <input type="hidden" name="item_number_1" value="1">
+                                <input type="hidden" name="amount_1" value="2">
+                                <input type="hidden" name="quantity_1" value="1">
+
+                                <input type="hidden" name="rm" value="2">
+
+
+
+
+                                @if(Auth::user())
+
+
+                                    <input type="hidden" name="return" value="http://jzuobkotor.me/thankyou?user={{Auth::user()->id}}">
+
+                                    {!! Form::button('Buy now',['class'=>'btn-e btn-e-primary','type'=>'image','name'=>'upload'])!!}
+
+                                @else
+
+                                    <a class="btn-e btn-e-primary" href="javascript:void(0)">Register and buy</a>
+
+                            @endif
+
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>

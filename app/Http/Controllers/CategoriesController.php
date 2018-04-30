@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Photo;
+use App\Category;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
 
-class PhotosController extends Controller
+class CategoriesController extends Controller
 {
 
     /**
@@ -20,9 +20,9 @@ class PhotosController extends Controller
      */
     public function index()
     {
-        $photos = Photo::all();
+        $categories = Category::all();
 
-        return view('admin.photos.index', compact('photos'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -32,7 +32,7 @@ class PhotosController extends Controller
      */
     public function create()
     {
-        return view('admin.photos.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -42,19 +42,13 @@ class PhotosController extends Controller
      */
     public function store(Request $request)
     {
+        
+        Category::create($request->all());
 
-        $file = $request->file('file');
-
-        $name = time() . $file->getClientOriginalName();
-
-        $file->move('media',$name);
-
-        Photo::create(['file'=>$name]);
-
-        Session::flash('message', 'Photo added!');
+        Session::flash('message', 'Category added!');
         Session::flash('status', 'success');
 
-        return redirect()->route('photos.index');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -66,9 +60,9 @@ class PhotosController extends Controller
      */
     public function show($id)
     {
-        $photo = Photo::findOrFail($id);
+        $category = Category::findOrFail($id);
 
-        return view('photos.show', compact('photo'));
+        return view('backEnd.categories.show', compact('category'));
     }
 
     /**
@@ -80,9 +74,9 @@ class PhotosController extends Controller
      */
     public function edit($id)
     {
-        $photo = Photo::findOrFail($id);
+        $category = Category::findOrFail($id);
 
-        return view('photos.edit', compact('photo'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -92,7 +86,17 @@ class PhotosController extends Controller
      *
      * @return Response
      */
+    public function update($id, Request $request)
+    {
+        
+        $category = Category::findOrFail($id);
+        $category->update($request->all());
 
+        Session::flash('message', 'Category updated!');
+        Session::flash('status', 'success');
+
+        return redirect()->route('categories.index');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -103,16 +107,14 @@ class PhotosController extends Controller
      */
     public function destroy($id)
     {
-        $photo = Photo::findOrFail($id);
+        $category = Category::findOrFail($id);
 
-        unlink(public_path() . $photo->file);
+        $category->delete();
 
-        $photo->delete();
-
-        Session::flash('message', 'Photo deleted!');
+        Session::flash('message', 'Category deleted!');
         Session::flash('status', 'success');
 
-        return redirect()->route('photos.index');
+        return redirect()->route('categories.index');
     }
 
 }

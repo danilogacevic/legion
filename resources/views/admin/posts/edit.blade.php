@@ -30,6 +30,8 @@ Edit Post
         </div>
     </div>
 
+    @if($post->hasTranslation())
+
     <div class="form-group {{ $errors->has('photos[]') ? 'has-error' : ''}}">
         {!! Form::label('photos[]', 'Photos: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
@@ -44,6 +46,9 @@ Edit Post
             {!! $errors->first('photos[]', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
+
+    @endif
+
 
     <div class="form-group {{ $errors->has('content') ? 'has-error' : ''}}">
         {!! Form::label('content', 'Content: ', ['class' => 'col-sm-3 control-label']) !!}

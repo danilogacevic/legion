@@ -23,6 +23,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('email-verification/error', 'Auth\RegisterController@getVerificationError')->name('email-verification.error');
 Route::get('email-verification/check/{token}', 'Auth\RegisterController@getVerification')->name('email-verification.check');
 
+// Admin Routes
+
 Route::group(['middleware'=>'role:admin'],function(){
 
 //    admin view
@@ -39,16 +41,34 @@ Route::group(['middleware'=>'role:admin'],function(){
 
     Route::get('/admin/posts/{post}/edit','PostsController@edit')->name('posts.edit');
 
+    Route::get('/admin/posts/create','PostsController@create')->name('posts.create');
+
     Route::patch('/admin/posts/{post}','PostsController@update')->name('posts.update');
 
     Route::delete('/admin/posts/{post}','PostsController@destroy')->name('posts.delete');
+
+//    admin gallery routes
+
+    Route::resource('/admin/photos','PhotosController');
+
+    //    admin videos routes
+
+    Route::resource('/admin/videos','VideosController');
+
+//    admin categories routes
+
+    Route::resource('/admin/categories','CategoriesController');
 });
 
-Route::group(['middleware'=>'role:admin,subscriber'],function(){
+// Logged in users routes
 
-//    admin post create route
+Route::group(['middleware'=>'role:admin,golden_member,subscriber'],function(){
 
-    Route::get('/admin/posts/create','PostsController@create')->name('posts.create');
+//     Create posts from in front end
+
+    Route::get('/create/post', function() {
+        return view('createPosts.create',['categories'=>[1=> 'Novosti']]);
+    })->name('create.post');
 
 //    admin post store route
 
@@ -56,3 +76,7 @@ Route::group(['middleware'=>'role:admin,subscriber'],function(){
 });
 
 Route::get('lang/{language}', ['as' => 'lang.switch', 'uses' => 'LanguageController@switchLang']);
+
+// Single post
+
+Route::get('/post/{id}','HomeController@post')->name('post');
