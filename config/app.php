@@ -155,6 +155,7 @@ return [
         Roland\Crud\CrudServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Dimsav\Translatable\TranslatableServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
 
         /*
          * Application Service Providers...

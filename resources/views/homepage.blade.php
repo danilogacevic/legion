@@ -936,7 +936,18 @@
                             </ul>
                         </div>
                         <div class="pricing-action">
-                            <a href="#" class="btn-e btn-e-primary">Buy it now</a>
+                            {{--<a href="#" class="btn-e btn-e-primary">Buy it now</a>--}}
+                            <form action="/en/payment" method="POST">
+                                <script
+                                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="pk_test_0jgTAVRPvFkzCo9G3gDsXc0Q"
+                                        data-amount="999"
+                                        data-name="Demo Site"
+                                        data-description="Example charge"
+                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                        data-locale="auto">
+                                </script>
+                            </form>
                         </div>
                     </div>
                 </div>

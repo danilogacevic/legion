@@ -80,3 +80,7 @@ Route::get('lang/{language}', ['as' => 'lang.switch', 'uses' => 'LanguageControl
 // Single post
 
 Route::get('/post/{id}','HomeController@post')->name('post');
+
+// Testing stripe
+
+Route::post('/payment','HomeController@payment');

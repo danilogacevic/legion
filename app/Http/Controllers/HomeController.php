@@ -35,4 +35,8 @@ class HomeController extends Controller
         $post = Post::findOrFail($id);
         return view('post',compact('post'));
     }
+
+    public function payment(Request $request){
+        dd($request->stripeToken);
+    }
 }

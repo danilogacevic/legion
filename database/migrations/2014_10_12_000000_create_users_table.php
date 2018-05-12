@@ -22,6 +22,10 @@ class CreateUsersTable extends Migration
             $table->boolean('newsletter')->default(false);
             $table->boolean('verified')->default(false);
             $table->string('verification_token')->nullable();
+            $table->string('stripe_id')->nullable();
+            $table->string('card_brand')->nullable();
+            $table->string('card_last_four')->nullable();
+            $table->timestamp('trial_ends_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
